@@ -855,7 +855,7 @@
                         const alwaysVisibleRows = ['R', 'A', 'B']; // A is sample in STV
                         const isSampleRow = ['B','C','D','E','F','G','H','I'].includes(label) || type === 'well-bf';
                         if(isSampleRow && !isActive) cell.style.visibility = 'hidden'; 
-                        else if (!isActive) cell.style.opacity = 0.5;
+                        else if (!isActive) cell.style.opacity = 1.0;
                         
                         // Hide Row A in the grid if we treat it strictly as reagents (handled by A1-A8 in layout usually)
                         // But here we render the grid rows A-I. In CMD, A is Reagents.
