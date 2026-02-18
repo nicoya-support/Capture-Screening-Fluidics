@@ -853,7 +853,7 @@
                     if (appMode === 'CMD') {
                         // CMD: B is Analyte, C-I are Ligands/Samples
                         const alwaysVisibleRows = ['R', 'A', 'B']; // A is sample in STV
-                        const isSampleRow = ['B','C','D','E','F','G','H','I'].includes(label) || type === 'well-bf';
+                        const isSampleRow = ['C','D','E','F','G','H','I'].includes(label) || type === 'well-bf';
                         if(isSampleRow && !isActive) cell.style.visibility = 'hidden'; 
                         else if (!isActive) cell.style.opacity = 1.0;
                         
