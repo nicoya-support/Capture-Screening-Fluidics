@@ -852,6 +852,7 @@
                     // VISIBILITY LOGIC
                     if (appMode === 'CMD') {
                         // CMD: B is Analyte, C-I are Ligands/Samples
+                        const alwaysVisibleRows = ['R', 'A', 'B']; // A is sample in STV
                         const isSampleRow = ['B','C','D','E','F','G','H','I'].includes(label) || type === 'well-bf';
                         if(isSampleRow && !isActive) cell.style.visibility = 'hidden'; 
                         else if (!isActive) cell.style.opacity = 0.5;
@@ -860,9 +861,9 @@
                         // But here we render the grid rows A-I. In CMD, A is Reagents.
                     } else {
                         // STV: A is Analyte, B-I are Ligands
-                        const alwaysVisibleRows = ['R', 'A']; // A is sample in STV
+                        const alwaysVisibleRows = ['R', 'A', 'B']; // A is sample in STV
                         const isAlwaysVisible = alwaysVisibleRows.includes(param) || type === 'well-r';
-                        const isSampleRow = ['B','C','D','E','F','G','H','I'].includes(label) || type === 'well-bf';
+                        const isSampleRow = ['C','D','E','F','G','H','I'].includes(label) || type === 'well-bf';
                         
                         if (!isActive && !isAlwaysVisible) cell.style.opacity = 0;
                     }
