@@ -507,8 +507,11 @@
                     const numRounds = isExpansion ? 14 : 7; // C-I = 7 rows
                     // Expansion cut-off is 7 rounds
                     if (isExpansion && step.roundNum > 7) {
-                        // Swap logic
-                        sourceCol = (colIndex <= 4) ? colIndex + 4 : colIndex - 4;
+                        // Dynamic swap logic based on available lanes
+                        let currentIdx = activeColumns.indexOf(colIndex);
+                        let halfLen = activeColumns.length / 2;
+                        let swappedIdx = currentIdx < halfLen ? currentIdx + halfLen : currentIdx - halfLen;
+                        sourceCol = activeColumns[swappedIdx];
                     }
 
                     return [
@@ -526,12 +529,23 @@
             }
             
             if (stepName.includes('Regeneration')) {
-                const s1 = (colIndex * 2) - 1;
+                const logicalLane = activeColumns.indexOf(colIndex) + 1;
                 let rWell = 'well-R4';
-                if ([1,2,9,10].includes(s1)) rWell = 'well-R1';
-                else if ([3,4,11,12].includes(s1)) rWell = 'well-R2';
-                else if ([5,6,13,14].includes(s1)) rWell = 'well-R3';
-                return [{ id: rWell, off: 0, side: 'Both' }];
+                if (currentMode === 4) {
+                    if (logicalLane === 2) rWell = 'well-R2';
+                    else if (logicalLane === 1) rWell = 'well-R1';
+                } else if (currentMode === 8) {
+                    if (logicalLane === 1) rWell = 'well-R1';
+                    else if (logicalLane === 2) rWell = 'well-R2';
+                    else if (logicalLane === 3) rWell = 'well-R3';
+                    else if (logicalLane === 4) rWell = 'well-R4';
+                } else {
+                    const s1 = (colIndex * 2) - 1;
+                    if ([1,2,9,10].includes(s1)) rWell = 'well-R1';
+                    else if ([3,4,11,12].includes(s1)) rWell = 'well-R2';
+                    else if ([5,6,13,14].includes(s1)) rWell = 'well-R3';
+                }
+                return [{ id: rWell, off: 0, side: 'Both', type: 'regen' }];
             }
             if (stepName.includes('Clean')) return [{ id: (colIndex % 2 !== 0) ? 'well-A3' : 'well-A4', off: 0, side: 'Both' }];
             if (stepName.includes('Ethanolamine')) return [{ id: (colIndex % 2 !== 0) ? 'well-A7' : 'well-A8', off: 0, side: 'Both' }];
@@ -556,11 +570,22 @@
             }
             
             if (stepName.includes('Regeneration')) {
-                const s1 = (colIndex * 2) - 1;
+                const logicalLane = activeColumns.indexOf(colIndex) + 1;
                 let rWell = 'well-R4';
-                if ([1,2,9,10].includes(s1)) rWell = 'well-R1';
-                else if ([3,4,11,12].includes(s1)) rWell = 'well-R2';
-                else if ([5,6,13,14].includes(s1)) rWell = 'well-R3';
+                if (currentMode === 4) {
+                    if (logicalLane === 2) rWell = 'well-R2';
+                    else if (logicalLane === 1) rWell = 'well-R1';
+                } else if (currentMode === 8) {
+                    if (logicalLane === 1) rWell = 'well-R1';
+                    else if (logicalLane === 2) rWell = 'well-R2';
+                    else if (logicalLane === 3) rWell = 'well-R3';
+                    else if (logicalLane === 4) rWell = 'well-R4';
+                } else {
+                    const s1 = (colIndex * 2) - 1;
+                    if ([1,2,9,10].includes(s1)) rWell = 'well-R1';
+                    else if ([3,4,11,12].includes(s1)) rWell = 'well-R2';
+                    else if ([5,6,13,14].includes(s1)) rWell = 'well-R3';
+                }
                 return [{ id: rWell, off: 0, side: 'Both', type: 'regen' }];
             }
             
@@ -584,7 +609,11 @@
                     const numRounds = isExpansion ? 16 : 8; // B-I = 8 rows
                     // Expansion cut-off is 8 rounds
                     if (isExpansion && step.roundNum > 8) {
-                        sourceCol = (colIndex <= 4) ? colIndex + 4 : colIndex - 4;
+                        // Dynamic swap logic based on available lanes
+                        let currentIdx = activeColumns.indexOf(colIndex);
+                        let halfLen = activeColumns.length / 2;
+                        let swappedIdx = currentIdx < halfLen ? currentIdx + halfLen : currentIdx - halfLen;
+                        sourceCol = activeColumns[swappedIdx];
                     }
 
                     return [
